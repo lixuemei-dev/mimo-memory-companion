@@ -8,440 +8,516 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --bg: #0a0a0f;
-  --card-bg: rgba(255,255,255,0.03);
-  --card-border: rgba(255,255,255,0.08);
-  --text: #e2e8f0;
-  --text-dim: #94a3b8;
+  --bg: #06060b;
+  --surface: #0e0e16;
+  --card: rgba(255,255,255,0.025);
+  --border: rgba(255,255,255,0.06);
+  --text: #e8ecf4;
+  --dim: #7a8199;
   --accent-1: #6366f1;
   --accent-2: #06b6d4;
-  --gradient: linear-gradient(135deg, #6366f1, #06b6d4);
+  --accent-3: #a855f7;
+  --glow-1: rgba(99,102,241,0.15);
+  --glow-2: rgba(6,182,212,0.15);
 }
 
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
   overflow-x: hidden;
 }
 
-/* Canvas background */
-#particles {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  z-index: 0; pointer-events: none;
+/* Ambient glow */
+.ambient {
+  position: fixed; top: -30%; left: -10%; width: 60vw; height: 60vw;
+  background: radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+.ambient-2 {
+  position: fixed; bottom: -20%; right: -15%; width: 50vw; height: 50vw;
+  background: radial-gradient(circle, rgba(6,182,212,0.05) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
 }
 
-/* Navigation */
+/* Nav */
 nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: rgba(10,10,15,0.75);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--card-border);
-  padding: 0 2rem;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  padding: 0 3vw; height: 60px;
   display: flex; align-items: center; justify-content: space-between;
-  height: 64px;
+  background: rgba(6,6,11,0.7); backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
 }
-nav .logo { font-size: 1.2rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
-nav .logo span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-nav .links { display: flex; gap: 2rem; align-items: center; }
-nav .links a { color: var(--text-dim); text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
+nav .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1rem; }
+nav .logo .icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  display: flex; align-items: center; justify-content: center; font-size: 16px;
+}
+nav .logo span { background: linear-gradient(135deg, #818cf8, #22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+nav .links { display: flex; align-items: center; gap: 2rem; }
+nav .links a { color: var(--dim); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color 0.25s; }
 nav .links a:hover { color: var(--text); }
-nav .gh-btn {
-  background: var(--gradient); color: #fff; padding: 0.45rem 1rem;
-  border-radius: 8px; text-decoration: none; font-size: 0.85rem; font-weight: 600;
-  transition: box-shadow 0.3s;
+.gh-pill {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+  padding: 6px 14px; border-radius: 20px; color: var(--text);
+  text-decoration: none; font-size: 0.8rem; font-weight: 600;
+  transition: background 0.25s, border-color 0.25s;
 }
-nav .gh-btn:hover { box-shadow: 0 0 20px rgba(99,102,241,0.4); }
-
-/* Sections */
-section { position: relative; z-index: 1; padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; }
-.section-title {
-  font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; text-align: center;
-}
-.section-title span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.section-subtitle { text-align: center; color: var(--text-dim); margin-bottom: 3rem; font-size: 1.05rem; }
+.gh-pill:hover { background: rgba(99,102,241,0.12); border-color: var(--accent-1); }
 
 /* Hero */
-#hero {
-  min-height: 100vh; display: flex; flex-direction: column; align-items: center;
-  justify-content: center; text-align: center; padding-top: 64px;
+.hero {
+  position: relative; z-index: 1;
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 100px 3vw 60px;
 }
-#hero h1 {
-  font-size: 3.8rem; font-weight: 900; margin-bottom: 1rem; line-height: 1.1;
+.hero-inner { text-align: center; max-width: 720px; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(99,102,241,0.08); border: 1px solid rgba(99,102,241,0.15);
+  border-radius: 20px; padding: 5px 16px; font-size: 0.78rem; font-weight: 600;
+  color: #a5b4fc; margin-bottom: 28px;
 }
-#hero h1 span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-#hero .subtitle { font-size: 1.2rem; color: var(--text-dim); margin-bottom: 2.5rem; max-width: 500px; }
-.stats-row { display: flex; gap: 3rem; margin-bottom: 3rem; }
-.stat { text-align: center; }
-.stat .num { font-size: 2rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.stat .label { font-size: 0.85rem; color: var(--text-dim); }
-.hero-btns { display: flex; gap: 1rem; }
-.btn-primary {
-  background: var(--gradient); color: #fff; padding: 0.8rem 2rem; border-radius: 10px;
-  text-decoration: none; font-weight: 700; font-size: 1rem; border: none; cursor: pointer;
+.hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+.hero h1 {
+  font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 800;
+  line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 20px;
+}
+.hero h1 .grad { background: linear-gradient(135deg, #818cf8 0%, #22d3ee 50%, #a78bfa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero .sub { font-size: 1.15rem; color: var(--dim); max-width: 500px; margin: 0 auto 36px; line-height: 1.6; }
+.hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn-g {
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  color: #fff; padding: 12px 28px; border-radius: 12px; font-weight: 700;
+  font-size: 0.9rem; text-decoration: none; border: none; cursor: pointer;
   transition: box-shadow 0.3s, transform 0.2s;
 }
-.btn-primary:hover { box-shadow: 0 0 30px rgba(99,102,241,0.5); transform: translateY(-2px); }
-.btn-secondary {
-  background: transparent; color: var(--text); padding: 0.8rem 2rem; border-radius: 10px;
-  text-decoration: none; font-weight: 600; font-size: 1rem; border: 1px solid var(--card-border);
-  transition: border-color 0.3s;
+.btn-g:hover { box-shadow: 0 8px 32px rgba(99,102,241,0.35); transform: translateY(-1px); }
+.btn-o {
+  background: rgba(255,255,255,0.04); color: var(--text);
+  padding: 12px 28px; border-radius: 12px; font-weight: 600;
+  font-size: 0.9rem; text-decoration: none; border: 1px solid var(--border);
+  transition: border-color 0.25s, background 0.25s;
 }
-.btn-secondary:hover { border-color: var(--accent-1); }
+.btn-o:hover { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.06); }
 
-/* Cards grid */
-.cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+/* Stats ribbon */
+.stats-ribbon {
+  display: flex; justify-content: center; gap: 48px;
+  margin-top: 52px; padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+.stats-ribbon .s { text-align: center; }
+.stats-ribbon .n { font-size: 1.6rem; font-weight: 800; background: linear-gradient(135deg, #818cf8, #22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.stats-ribbon .l { font-size: 0.75rem; color: var(--dim); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
+
+/* Section wrapper */
+.sec { position: relative; z-index: 1; padding: 80px 3vw; max-width: 1100px; margin: 0 auto; }
+.sec-label {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--accent-2);
+  margin-bottom: 12px;
+}
+.sec-label::before { content: ''; width: 16px; height: 1px; background: var(--accent-2); }
+.sec-title { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 8px; }
+.sec-sub { color: var(--dim); font-size: 0.95rem; margin-bottom: 40px; max-width: 520px; }
+.sec-sub.center { text-align: center; margin-left: auto; margin-right: auto; }
+
+/* Grid layouts */
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+@media(max-width:900px){ .grid-3,.grid-4{grid-template-columns:repeat(2,1fr);} }
+@media(max-width:600px){ .grid-3,.grid-4,.grid-2{grid-template-columns:1fr;} }
+
+/* Cards */
 .card {
-  background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px;
-  padding: 2rem 1.5rem; transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 24px;
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
-.card:hover { transform: translateY(-4px); box-shadow: 0 0 30px rgba(99,102,241,0.15); border-color: var(--accent-1); }
-.card .icon { font-size: 2rem; margin-bottom: 1rem; }
-.card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
-.card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.5; }
+.card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.1); }
+.card .ic { font-size: 1.5rem; margin-bottom: 12px; }
+.card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
+.card p { font-size: 0.82rem; color: var(--dim); line-height: 1.55; }
 
-/* Flow */
-.flow { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; }
-.flow-step {
-  background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px;
-  padding: 1.5rem 1.2rem; text-align: center; min-width: 160px; transition: transform 0.3s;
-}
-.flow-step:hover { transform: translateY(-3px); }
-.flow-step .icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
-.flow-step h4 { font-size: 1rem; font-weight: 700; }
-.flow-step p { font-size: 0.8rem; color: var(--text-dim); margin-top: 0.3rem; }
-.flow-arrow { font-size: 1.5rem; color: var(--accent-2); }
+/* Feature card with accent glow */
+.card.glow-purple:hover { box-shadow: 0 0 40px rgba(99,102,241,0.08); }
+.card.glow-cyan:hover { box-shadow: 0 0 40px rgba(6,182,212,0.08); }
+.card.glow-pink:hover { box-shadow: 0 0 40px rgba(168,85,247,0.08); }
 
-/* Architecture */
-.arch-container {
-  background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px;
-  padding: 2rem; overflow-x: auto;
+/* How it works — horizontal steps */
+.steps { display: flex; align-items: stretch; gap: 0; }
+.step {
+  flex: 1; padding: 28px 20px; text-align: center;
+  background: var(--card); border: 1px solid var(--border);
+  position: relative;
 }
-.arch-container pre {
-  font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
-  font-size: 0.85rem; line-height: 1.6; color: var(--text);
-  white-space: pre; text-align: center;
+.step:first-child { border-radius: 14px 0 0 14px; }
+.step:last-child { border-radius: 0 14px 14px 0; }
+.step:not(:last-child)::after {
+  content: '→'; position: absolute; right: -12px; top: 50%;
+  transform: translateY(-50%); font-size: 1.2rem; color: var(--accent-2);
+  z-index: 2; background: var(--bg); width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center; border-radius: 50%;
+  border: 1px solid var(--border);
+}
+.step .num {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 800; color: #fff; margin-bottom: 12px;
+}
+.step h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
+.step p { font-size: 0.78rem; color: var(--dim); }
+
+/* Architecture — split layout */
+.arch-split { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+@media(max-width:800px){ .arch-split{grid-template-columns:1fr;} }
+.arch-box {
+  background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+  overflow: hidden;
+}
+.arch-box-head {
+  padding: 14px 20px; border-bottom: 1px solid var(--border);
+  font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.05em; color: var(--dim);
+}
+.arch-box pre {
+  padding: 20px; font-family: 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.72rem; line-height: 1.7; color: var(--text);
+  overflow-x: auto;
+}
+.arch-desc { padding: 20px 0 0 0; }
+.arch-desc h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+.arch-desc ul { list-style: none; padding: 0; }
+.arch-desc li {
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+  font-size: 0.85rem; display: flex; align-items: center; gap: 10px;
+}
+.arch-desc li:last-child { border-bottom: none; }
+.arch-desc li .tag {
+  font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 4px;
+  background: rgba(99,102,241,0.1); color: #a5b4fc; white-space: nowrap;
 }
 
-/* Memory types */
-.types-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
-@media (max-width: 800px) { .types-grid { grid-template-columns: repeat(2, 1fr); } }
+/* Memory types — 2x2 grid */
+.type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media(max-width:700px){ .type-grid{grid-template-columns:1fr;} }
 .type-card {
-  background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px;
-  padding: 1.8rem 1.4rem; text-align: center; transition: transform 0.3s, box-shadow 0.3s;
+  background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+  padding: 28px 24px; display: flex; gap: 16px; align-items: flex-start;
+  transition: transform 0.3s, border-color 0.3s;
 }
-.type-card:hover { transform: translateY(-4px); box-shadow: 0 0 25px rgba(6,182,212,0.15); }
-.type-card .badge {
-  display: inline-block; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.75rem;
-  font-weight: 700; margin-bottom: 1rem; background: rgba(99,102,241,0.15); color: var(--accent-1);
+.type-card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.1); }
+.type-icon {
+  width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
 }
-.type-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
-.type-card p { font-size: 0.85rem; color: var(--text-dim); }
+.type-icon.purple { background: rgba(99,102,241,0.1); }
+.type-icon.cyan { background: rgba(6,182,212,0.1); }
+.type-icon.pink { background: rgba(168,85,247,0.1); }
+.type-icon.green { background: rgba(34,197,94,0.1); }
+.type-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+.type-card p { font-size: 0.8rem; color: var(--dim); line-height: 1.5; }
 
 /* Terminal */
-.terminal-wrap { max-width: 700px; margin: 0 auto; }
-.terminal {
-  background: #0d1117; border: 1px solid #30363d; border-radius: 12px;
-  overflow: hidden; font-family: 'Fira Code', 'Cascadia Code', monospace;
+.term-wrap { max-width: 640px; margin: 0 auto; }
+.term {
+  background: #0c1018; border: 1px solid #1e2433; border-radius: 12px;
+  overflow: hidden;
 }
-.terminal-bar {
-  background: #161b22; padding: 0.6rem 1rem; display: flex; align-items: center; gap: 0.5rem;
-  border-bottom: 1px solid #30363d;
+.term-bar {
+  display: flex; align-items: center; gap: 6px;
+  padding: 10px 14px; background: #111827; border-bottom: 1px solid #1e2433;
 }
-.terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
-.terminal-dot.r { background: #ff5f57; }
-.terminal-dot.y { background: #ffbd2e; }
-.terminal-dot.g { background: #28c840; }
-.terminal-title { color: #8b949e; font-size: 0.75rem; margin-left: 0.5rem; }
-.terminal-body { padding: 1.2rem; font-size: 0.82rem; line-height: 1.7; min-height: 280px; }
-.terminal-body .prompt { color: #28c840; }
-.terminal-body .cmd { color: #e6edf3; }
-.terminal-body .output { color: #8b949e; }
-.terminal-body .success { color: #3fb950; }
-.terminal-body .info { color: #58a6ff; }
-.terminal-body .dim { color: #484f58; }
+.tdot { width: 10px; height: 10px; border-radius: 50%; }
+.tdot.r { background: #f87171; } .tdot.y { background: #fbbf24; } .tdot.g { background: #34d399; }
+.term-title { font-size: 0.7rem; color: #6b7280; margin-left: 6px; }
+.term-body {
+  padding: 16px 18px; font-family: 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.78rem; line-height: 1.75; min-height: 300px;
+}
+.term-body .p { color: #34d399; } .term-body .c { color: #e5e7eb; }
+.term-body .o { color: #6b7280; } .term-body .s { color: #34d399; }
+.term-body .i { color: #60a5fa; }
 
-/* Stats */
-.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
-@media (max-width: 800px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
-.stat-card {
-  background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px;
-  padding: 2rem; text-align: center;
+/* CTA bottom */
+.cta-section { text-align: center; }
+.cta-code {
+  display: inline-block; background: #0c1018; border: 1px solid #1e2433;
+  border-radius: 10px; padding: 16px 24px; text-align: left;
+  font-family: 'Fira Code', monospace; font-size: 0.85rem; line-height: 1.8;
+  margin-bottom: 24px;
 }
-.stat-card .num { font-size: 3rem; font-weight: 900; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.stat-card .label { font-size: 0.95rem; color: var(--text-dim); margin-top: 0.3rem; }
-
-/* CTA */
-.cta { text-align: center; }
-.cta .commands {
-  background: #0d1117; border: 1px solid #30363d; border-radius: 12px;
-  padding: 1.5rem 2rem; display: inline-block; text-align: left; margin-bottom: 2rem;
-  font-family: 'Fira Code', monospace; font-size: 0.9rem; line-height: 1.8;
-}
-.cta .commands .prompt { color: #28c840; }
-.cta .commands .cmd { color: #e6edf3; }
-.cta-links { display: flex; gap: 1rem; justify-content: center; }
-
-/* Scroll reveal */
-.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s, transform 0.8s; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
+.cta-code .p { color: #34d399; } .cta-code .c { color: #e5e7eb; }
 
 /* Footer */
 footer {
-  text-align: center; padding: 3rem 2rem; color: var(--text-dim); font-size: 0.85rem;
-  border-top: 1px solid var(--card-border); position: relative; z-index: 1;
+  position: relative; z-index: 1;
+  text-align: center; padding: 40px 3vw;
+  border-top: 1px solid var(--border);
+  color: var(--dim); font-size: 0.8rem;
 }
-footer a { color: var(--accent-1); text-decoration: none; }
+footer a { color: var(--accent-2); text-decoration: none; }
+
+/* Scroll reveal */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s, transform 0.7s; }
+.reveal.vis { opacity: 1; transform: none; }
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<canvas id="particles"></canvas>
+<div class="ambient"></div>
+<div class="ambient-2"></div>
 
-<!-- Navigation -->
+<!-- Nav -->
 <nav>
-  <div class="logo">🧠 <span>MiMo Memory Companion</span></div>
+  <div class="logo">
+    <div class="icon">🧠</div>
+    <span>MiMo Memory</span>
+  </div>
   <div class="links">
     <a href="#features">Features</a>
-    <a href="#architecture">Architecture</a>
-    <a href="#quickstart">Quick Start</a>
-    <a class="gh-btn" href="https://github.com/lixuemei-dev/mimo-memory-companion" target="_blank">⭐ GitHub</a>
+    <a href="#how">How It Works</a>
+    <a href="#arch">Architecture</a>
+    <a href="#types">Memory Types</a>
+    <a href="#start">Get Started</a>
+    <a class="gh-pill" href="https://github.com/lixuemei-dev/mimo-memory-companion" target="_blank">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+      GitHub
+    </a>
   </div>
 </nav>
 
 <!-- Hero -->
-<section id="hero">
-  <h1><span>MiMo Memory<br>Companion</span></h1>
-  <p class="subtitle">Persistent memory layer for Xiaomi MiMo — making every conversation smarter than the last.</p>
-  <div class="stats-row">
-    <div class="stat"><div class="num">45+</div><div class="label">Files</div></div>
-    <div class="stat"><div class="num">4500+</div><div class="label">Lines</div></div>
-    <div class="stat"><div class="num">20+</div><div class="label">Tests</div></div>
-  </div>
-  <div class="hero-btns">
-    <a class="btn-primary" href="#quickstart">Get Started</a>
-    <a class="btn-secondary" href="https://github.com/lixuemei-dev/mimo-memory-companion" target="_blank">View on GitHub</a>
-  </div>
-</section>
-
-<!-- Pain Points -->
-<section id="features" class="reveal">
-  <h2 class="section-title">Why AI <span>Needs Memory</span></h2>
-  <p class="section-subtitle">Current LLMs forget everything between sessions. That ends now.</p>
-  <div class="cards-grid">
-    <div class="card"><div class="icon">🔄</div><h3>Stateless Conversations</h3><p>Every chat starts from zero. No continuity, no growth, no relationship.</p></div>
-    <div class="card"><div class="icon">🧠</div><h3>Context Loss</h3><p>Important details vanish mid-session. Users repeat themselves endlessly.</p></div>
-    <div class="card"><div class="icon">📈</div><h3>No Learning</h3><p>AI never improves. Day 100 is the same as Day 1.</p></div>
-    <div class="card"><div class="icon">🔁</div><h3>Repetitive Explanations</h3><p>"As I mentioned before..." — the most frustrating sentence in AI.</p></div>
-    <div class="card"><div class="icon">🧩</div><h3>Fragmented Knowledge</h3><p>Insights scattered across sessions. No unified understanding.</p></div>
-  </div>
-</section>
-
-<!-- Flow -->
-<section class="reveal">
-  <h2 class="section-title">How Memory <span>Works</span></h2>
-  <p class="section-subtitle">Four simple steps from conversation to lasting memory.</p>
-  <div class="flow">
-    <div class="flow-step"><div class="icon">💬</div><h4>Store</h4><p>Capture key info</p></div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-step"><div class="icon">🔍</div><h4>Retrieve</h4><p>Find relevant memories</p></div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-step"><div class="icon">💉</div><h4>Inject</h4><p>Add to context</p></div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-step"><div class="icon">🤖</div><h4>Respond</h4><p>AI answers with memory</p></div>
-  </div>
-</section>
-
-<!-- Architecture -->
-<section id="architecture" class="reveal">
-  <h2 class="section-title">Memory <span>Architecture</span></h2>
-  <p class="section-subtitle">Modular design. Pluggable adapters. Production-ready.</p>
-  <div class="arch-container">
-    <pre>
-┌─────────────────────────────────────────────────────────────────┐
-│                    MiMo Memory Companion                        │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
-│  │  Adapters     │  │  Analyzers   │  │  Reporters   │          │
-│  ├──────────────┤  ├──────────────┤  ├──────────────┤          │
-│  │  • MiMo      │  │  • Quality   │  │  • Console   │          │
-│  │  • OpenAI    │  │  • Recall    │  │  • JSON      │          │
-│  │  • Anthropic │  │  • Cohesion  │  │  • Markdown  │          │
-│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘          │
-│         │                 │                  │                  │
-│  ┌──────┴─────────────────┴──────────────────┴───────┐          │
-│  │              Core Memory Engine                   │          │
-│  ├───────────────────────────────────────────────────┤          │
-│  │  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────┐ │          │
-│  │  │  Store   │ │ Retrieve │ │ Compress │ │Inject│ │          │
-│  │  └──────────┘ └──────────┘ └──────────┘ └──────┘ │          │
-│  └───────────────────────────────────────────────────┘          │
-│         │                                                       │
-│  ┌──────┴──────────────────────────────────────────┐            │
-│  │              Utilities                          │            │
-│  ├─────────────────────────────────────────────────┤            │
-│  │  Embeddings · Decay · Tokenizer                 │            │
-│  └─────────────────────────────────────────────────┘            │
-└─────────────────────────────────────────────────────────────────┘
-    </pre>
-  </div>
-</section>
-
-<!-- Memory Types -->
-<section class="reveal">
-  <h2 class="section-title">Four Memory <span>Types</span></h2>
-  <p class="section-subtitle">From hard facts to emotional context — capturing everything.</p>
-  <div class="types-grid">
-    <div class="type-card"><div class="badge">Facts</div><h3>📋 Facts</h3><p>Concrete information: names, dates, numbers, code snippets, and verifiable data.</p></div>
-    <div class="type-card"><div class="badge">Preferences</div><h3>⚙️ Preferences</h3><p>User choices, opinions, workflows, and personalized settings.</p></div>
-    <div class="type-card"><div class="badge">Summaries</div><h3>📝 Summaries</h3><p>Compressed session overviews and key takeaways from past conversations.</p></div>
-    <div class="type-card"><div class="badge">Emotional</div><h3>💭 Emotional</h3><p>Sentiment, frustration markers, excitement, and relationship context.</p></div>
-  </div>
-</section>
-
-<!-- Terminal Demo -->
-<section class="reveal">
-  <h2 class="section-title">Try It <span>Out</span></h2>
-  <p class="section-subtitle">See the CLI in action.</p>
-  <div class="terminal-wrap">
-    <div class="terminal">
-      <div class="terminal-bar">
-        <div class="terminal-dot r"></div>
-        <div class="terminal-dot y"></div>
-        <div class="terminal-dot g"></div>
-        <span class="terminal-title">mimo-memory-companion — bash</span>
-      </div>
-      <div class="terminal-body" id="termBody"></div>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="dot"></span> v1.0.0 — Open Source</div>
+    <h1><span class="grad">MiMo Memory<br>Companion</span></h1>
+    <p class="sub">Persistent memory layer for Xiaomi MiMo — making every conversation smarter than the last.</p>
+    <div class="hero-btns">
+      <a class="btn-g" href="#start">Get Started</a>
+      <a class="btn-o" href="https://github.com/lixuemei-dev/mimo-memory-companion" target="_blank">View Source</a>
+    </div>
+    <div class="stats-ribbon">
+      <div class="s"><div class="n">45+</div><div class="l">Files</div></div>
+      <div class="s"><div class="n">4500+</div><div class="l">Lines</div></div>
+      <div class="s"><div class="n">20+</div><div class="l">Tests</div></div>
+      <div class="s"><div class="n">4</div><div class="l">Memory Types</div></div>
     </div>
   </div>
 </section>
 
-<!-- Stats -->
-<section class="reveal">
-  <h2 class="section-title">Project <span>Stats</span></h2>
-  <p class="section-subtitle">Built with care, tested thoroughly.</p>
-  <div class="stats-grid">
-    <div class="stat-card"><div class="num">45+</div><div class="label">Source Files</div></div>
-    <div class="stat-card"><div class="num">4500+</div><div class="label">Lines of Code</div></div>
-    <div class="stat-card"><div class="num">20+</div><div class="label">Test Cases</div></div>
-    <div class="stat-card"><div class="num">4</div><div class="label">Memory Types</div></div>
+<!-- Features: 3-col -->
+<section id="features" class="sec reveal">
+  <div class="sec-label">Why This Exists</div>
+  <h2 class="sec-title">AI Without Memory is Broken</h2>
+  <p class="sec-sub">Every conversation starts from scratch. Every insight is lost. That ends here.</p>
+  <div class="grid-3">
+    <div class="card glow-purple">
+      <div class="ic">🔄</div>
+      <h3>Stateless by Default</h3>
+      <p>LLMs forget everything the moment a session ends. No continuity, no growth, no relationship.</p>
+    </div>
+    <div class="card glow-cyan">
+      <div class="ic">🧩</div>
+      <h3>Context Collapses</h3>
+      <p>Mid-conversation context windows overflow. Important details get pushed out and lost forever.</p>
+    </div>
+    <div class="card glow-pink">
+      <div class="ic">🔁</div>
+      <h3>Repetitive Loops</h3>
+      <p>"As I mentioned before..." — the most broken UX pattern in conversational AI.</p>
+    </div>
+    <div class="card glow-cyan">
+      <div class="ic">📊</div>
+      <h3>No Learning Curve</h3>
+      <p>Day 100 of using an AI feels exactly like Day 1. Zero adaptation, zero personalization.</p>
+    </div>
+    <div class="card glow-purple">
+      <div class="ic">🧬</div>
+      <h3>Fragmented Insights</h3>
+      <p>Knowledge scattered across hundreds of sessions. No unified understanding ever forms.</p>
+    </div>
+    <div class="card glow-pink">
+      <div class="ic">💸</div>
+      <h3>Token Waste</h3>
+      <p>Re-explaining context burns tokens. Every repeated background costs real money.</p>
+    </div>
+  </div>
+</section>
+
+<!-- How it works: steps -->
+<section id="how" class="sec reveal">
+  <div class="sec-label">How It Works</div>
+  <h2 class="sec-title">Four Steps to Persistent Memory</h2>
+  <p class="sec-sub">Simple pipeline. Powerful results. Zero configuration.</p>
+  <div class="steps">
+    <div class="step"><div class="num">1</div><h4>Store</h4><p>Extract & persist key information from conversations</p></div>
+    <div class="step"><div class="num">2</div><h4>Retrieve</h4><p>Find relevant memories using vector similarity search</p></div>
+    <div class="step"><div class="num">3</div><h4>Inject</h4><p>Automatically add context to your LLM prompts</p></div>
+    <div class="step"><div class="num">4</div><h4>Respond</h4><p>AI answers with full awareness of past conversations</p></div>
+  </div>
+</section>
+
+<!-- Architecture: split -->
+<section id="arch" class="sec reveal">
+  <div class="sec-label">Architecture</div>
+  <h2 class="sec-title">Modular. Pluggable. Production-Ready.</h2>
+  <p class="sec-sub">Every component is independent. Swap adapters, add analyzers, extend freely.</p>
+  <div class="arch-split">
+    <div class="arch-box">
+      <div class="arch-box-head">System Architecture</div>
+      <pre>
+    ┌─────────────────────────────┐
+    │      Adapters Layer         │
+    │  ┌──────┬──────┬─────────┐  │
+    │  │ MiMo │OpenAI│Anthropic│  │
+    │  └──┬───┴──┬───┴────┬────┘  │
+    │     └──────┼────────┘       │
+    │   ┌────────┴────────┐       │
+    │   │  Core Engine     │       │
+    │   │ Store→Retrieve   │       │
+    │   │ Compress→Inject  │       │
+    │   └────────┬────────┘       │
+    │   ┌────────┴────────┐       │
+    │   │   Utilities     │       │
+    │   │ Embed·Decay·Tok │       │
+    │   └─────────────────┘       │
+    └─────────────────────────────┘</pre>
+    </div>
+    <div class="arch-box">
+      <div class="arch-box-head">Key Components</div>
+      <div style="padding:16px 20px;">
+        <ul class="arch-desc" style="list-style:none;padding:0;">
+          <li><span class="tag">Core</span> MemoryStore — persistent CRUD with auto-indexing</li>
+          <li><span class="tag">Core</span> Retriever — vector similarity + keyword hybrid search</li>
+          <li><span class="tag">Core</span> Compressor — smart extraction with importance scoring</li>
+          <li><span class="tag">Core</span> Injector — budget-aware context prompt builder</li>
+          <li><span class="tag">Adapter</span> MiMo — optimized for Xiaomi MiMo-V2.5</li>
+          <li><span class="tag">Adapter</span> OpenAI — GPT-4o compatible</li>
+          <li><span class="tag">Adapter</span> Anthropic — Claude 3.5 / 4 compatible</li>
+          <li><span class="tag">Analyzer</span> Quality, Recall, Cohesion — 3 precision instruments</li>
+          <li><span class="tag">Reporter</span> Console, JSON, Markdown — multi-format output</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Memory Types -->
+<section id="types" class="sec reveal">
+  <div class="sec-label">Memory Types</div>
+  <h2 class="sec-title">Four Dimensions of Understanding</h2>
+  <p class="sec-sub">From hard facts to emotional context — capturing the full picture.</p>
+  <div class="type-grid">
+    <div class="type-card">
+      <div class="type-icon purple">📋</div>
+      <div><h3>Facts</h3><p>Concrete, verifiable information — names, dates, numbers, configurations, and technical details.</p></div>
+    </div>
+    <div class="type-card">
+      <div class="type-icon cyan">⚙️</div>
+      <div><h3>Preferences</h3><p>User choices, opinions, coding styles, workflows, and personalized settings that shape every response.</p></div>
+    </div>
+    <div class="type-card">
+      <div class="type-icon pink">📝</div>
+      <div><h3>Summaries</h3><p>Compressed session overviews and key takeaways — what happened, what mattered, what changed.</p></div>
+    </div>
+    <div class="type-card">
+      <div class="type-icon green">💭</div>
+      <div><h3>Emotional</h3><p>Sentiment tracking, frustration markers, excitement signals, and relationship dynamics.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Terminal -->
+<section class="sec reveal" style="text-align:center;">
+  <div class="sec-label" style="justify-content:center;">Try It Out</div>
+  <h2 class="sec-title" style="text-align:center;">See It In Action</h2>
+  <p class="sec-sub center">The CLI is clean, fast, and feels native.</p>
+  <div class="term-wrap">
+    <div class="term">
+      <div class="term-bar">
+        <div class="tdot r"></div><div class="tdot y"></div><div class="tdot g"></div>
+        <span class="term-title">mimo-memory — zsh</span>
+      </div>
+      <div class="term-body" id="tb"></div>
+    </div>
   </div>
 </section>
 
 <!-- CTA -->
-<section id="quickstart" class="reveal cta">
-  <h2 class="section-title">Get <span>Started</span></h2>
-  <p class="section-subtitle">Up and running in 60 seconds.</p>
-  <div class="commands">
-    <span class="prompt">$</span> <span class="cmd">git clone https://github.com/lixuemei-dev/mimo-memory-companion.git</span><br>
-    <span class="prompt">$</span> <span class="cmd">cd mimo-memory-companion</span><br>
-    <span class="prompt">$</span> <span class="cmd">npm install</span><br>
-    <span class="prompt">$</span> <span class="cmd">npm start</span><br>
+<section id="start" class="sec cta-section reveal">
+  <div class="sec-label" style="justify-content:center;">Get Started</div>
+  <h2 class="sec-title" style="text-align:center;">Up in 60 Seconds</h2>
+  <p class="sec-sub center">Clone, install, and you're memory-enabled.</p>
+  <div class="cta-code">
+    <span class="p">$</span> <span class="c">git clone https://github.com/lixuemei-dev/mimo-memory-companion.git</span><br>
+    <span class="p">$</span> <span class="c">cd mimo-memory-companion && npm install</span><br>
+    <span class="p">$</span> <span class="c">npm start</span><br>
   </div>
-  <div class="cta-links">
-    <a class="btn-primary" href="https://github.com/lixuemei-dev/mimo-memory-companion" target="_blank">⭐ Star on GitHub</a>
+  <div class="hero-btns" style="justify-content:center;">
+    <a class="btn-g" href="https://github.com/lixuemei-dev/mimo-memory-companion" target="_blank">⭐ Star on GitHub</a>
   </div>
 </section>
 
 <footer>
-  <p>Built with 🧠 by <a href="https://github.com/lixuemei-dev">lixuemei-dev</a> · MIT License · 2026</p>
+  <p>Built by <a href="https://github.com/lixuemei-dev">lixuemei-dev</a> · MIT License · 2026</p>
 </footer>
 
 <script>
-// Particle background
-(function(){
-  const c = document.getElementById('particles');
-  const ctx = c.getContext('2d');
-  let w, h, particles = [];
-  function resize(){ w = c.width = window.innerWidth; h = c.height = window.innerHeight; }
-  window.addEventListener('resize', resize); resize();
-  for(let i=0;i<80;i++){
-    particles.push({
-      x: Math.random()*w, y: Math.random()*h,
-      r: Math.random()*2+0.5,
-      dx: (Math.random()-0.5)*0.3,
-      dy: (Math.random()-0.5)*0.3,
-      o: Math.random()*0.4+0.1
-    });
-  }
-  function draw(){
-    ctx.clearRect(0,0,w,h);
-    particles.forEach(p=>{
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle = `rgba(99,102,241,${p.o})`;
-      ctx.fill();
-      p.x+=p.dx; p.y+=p.dy;
-      if(p.x<0)p.x=w; if(p.x>w)p.x=0;
-      if(p.y<0)p.y=h; if(p.y>h)p.y=0;
-    });
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
-
 // Scroll reveal
 (function(){
-  const els = document.querySelectorAll('.reveal');
-  const obs = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
-  }, {threshold:0.1});
-  els.forEach(el=>obs.observe(el));
+  const obs = new IntersectionObserver(es => {
+    es.forEach(e => { if(e.isIntersecting) e.target.classList.add('vis'); });
+  }, {threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 })();
 
-// Terminal typing animation
+// Terminal typing
 (function(){
   const lines = [
-    {type:'prompt', text:'$ '},
-    {type:'cmd', text:'npx mimo-memory init --adapter mimo'},
-    {type:'output', text:''},
-    {type:'info', text:'🧠 MiMo Memory Companion v1.0.0'},
-    {type:'output', text:'   Initializing memory store...'},
-    {type:'success', text:'   ✓ Store initialized (capacity: 10,000)'},
-    {type:'success', text:'   ✓ Embedding engine ready'},
-    {type:'success', text:'   ✓ Decay scheduler active'},
-    {type:'output', text:''},
-    {type:'output', text:'   Memory types: facts, preferences, summaries, emotional'},
-    {type:'output', text:'   Adapters: mimo, openai, anthropic'},
-    {type:'output', text:''},
-    {type:'success', text:'   Ready! Memory companion is online 🚀'},
-    {type:'output', text:''},
-    {type:'prompt', text:'$ '},
-    {type:'cmd', text:'mimo-memory store --type fact --key "project" --value "MiMo Memory Companion"'},
-    {type:'output', text:''},
-    {type:'success', text:'   ✓ Stored: {type: "fact", key: "project", value: "MiMo Memory Companion"}'},
-    {type:'output', text:'   Embedding generated (dim=384) | Decay: none (fresh)'},
-    {type:'output', text:''},
-    {type:'prompt', text:'$ '},
-    {type:'cmd', text:'mimo-memory recall --query "what project am I working on"'},
-    {type:'output', text:''},
-    {type:'info', text:'   📡 Retrieving top 5 memories...'},
-    {type:'success', text:'   ✓ Found: "MiMo Memory Companion" (relevance: 0.94)'},
-    {type:'output', text:'   Context injected: 128 tokens added to prompt'},
-    {type:'output', text:''},
+    {t:'p',v:'$ '},{t:'c',v:'npx mimo-memory init --adapter mimo'},{t:'o',v:''},
+    {t:'i',v:'🧠 MiMo Memory Companion v1.0.0'},{t:'o',v:'   Initializing memory store…'},
+    {t:'s',v:'   ✓ Store ready (capacity: 10,000)'},
+    {t:'s',v:'   ✓ Embedding engine online'},
+    {t:'s',v:'   ✓ Decay scheduler active'},
+    {t:'o',v:''},{t:'s',v:'   Ready! 🚀'},{t:'o',v:''},
+    {t:'p',v:'$ '},{t:'c',v:'mimo-memory store --type fact --key "project" --value "MiMo Memory Companion"'},
+    {t:'o',v:''},{t:'s',v:'   ✓ Stored (dim=384, decay=1.0)'},{t:'o',v:''},
+    {t:'p',v:'$ '},{t:'c',v:'mimo-memory recall --query "what project am I on"'},
+    {t:'o',v:''},{t:'i',v:'   📡 Retrieving top 5…'},
+    {t:'s',v:'   ✓ "MiMo Memory Companion" (score: 0.94)'},
+    {t:'o',v:'   Context: 128 tokens injected'},{t:'o',v:''},
   ];
-  const el = document.getElementById('termBody');
+  const el = document.getElementById('tb');
   let started = false;
-  const obs = new IntersectionObserver((entries)=>{
-    if(entries[0].isIntersecting && !started){
+  const obs = new IntersectionObserver(es => {
+    if(es[0].isIntersecting && !started){
       started = true;
       let i = 0;
-      function addLine(){
+      (function next(){
         if(i >= lines.length) return;
         const l = lines[i];
-        const span = document.createElement('span');
-        span.className = l.type;
-        span.textContent = l.text;
-        if(l.text === ''){ span.innerHTML = '<br>'; }
-        el.appendChild(span);
+        const s = document.createElement('span');
+        s.className = l.t;
+        s.textContent = l.v === '' ? '\n' : l.v;
+        el.appendChild(s);
         i++;
-        setTimeout(addLine, l.text === '' ? 300 : (l.type==='prompt'?400:60));
-      }
-      addLine();
+        setTimeout(next, l.v === '' ? 250 : l.t==='p'?350:55);
+      })();
     }
   }, {threshold:0.3});
   obs.observe(el.parentElement);
