@@ -1,0 +1,23 @@
+{
+  "name": "daily-coding-session",
+  "description": "Realistic workload: typical developer coding session",
+  "config": {
+    "duration": "2 hours",
+    "messages": 80,
+    "memoryOps": 30
+  },
+  "operations": [
+    { "type": "session_start", "context": "debugging" },
+    { "type": "recall", "query": "what was I working on yesterday", "topK": 3 },
+    { "type": "store", "type": "fact", "key": "bug_fix", "value": "Null pointer in user service, fixed by adding guard clause" },
+    { "type": "recall", "query": "project structure and conventions", "topK": 5 },
+    { "type": "store", "type": "preference", "key": "code_style", "value": "Use arrow functions, prefer const, 2-space indent" },
+    { "type": "recall", "query": "recent code changes", "topK": 5 },
+    { "type": "session_end" }
+  ],
+  "expected": {
+    "memoriesStored": 30,
+    "recallRelevance": "> 0.85",
+    "contextContinuity": "> 0.9"
+  }
+}

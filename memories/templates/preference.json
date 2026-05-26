@@ -1,0 +1,13 @@
+{
+  "id": "template_preference",
+  "type": "preference",
+  "key": "",
+  "value": "",
+  "createdAt": null,
+  "accessCount": 0,
+  "decayFactor": 1.0,
+  "embedding": null,
+  "tags": [],
+  "sessionIds": [],
+  "sentiment": null
+}

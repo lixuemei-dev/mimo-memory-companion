@@ -1,0 +1,9 @@
+{
+  "memories": [
+    { "id": "sm_001", "type": "fact", "key": "user_name", "value": "Alex Chen", "createdAt": 1748000000000, "accessCount": 15, "decayFactor": 0.95 },
+    { "id": "sm_002", "type": "preference", "key": "code_style", "value": "Prefers TypeScript over JavaScript, uses ESLint with strict config", "createdAt": 1747900000000, "accessCount": 8, "decayFactor": 0.88 },
+    { "id": "sm_003", "type": "summary", "key": "last_session", "value": "Discussed API design patterns, decided on REST over GraphQL", "createdAt": 1747800000000, "accessCount": 3, "decayFactor": 0.82 },
+    { "id": "sm_004", "type": "fact", "key": "project_deadline", "value": "Project Alpha due March 15, 2026", "createdAt": 1747700000000, "accessCount": 5, "decayFactor": 0.75 },
+    { "id": "sm_005", "type": "emotional", "key": "frustration", "value": "User was frustrated with slow CI pipeline, wants optimization", "createdAt": 1747600000000, "accessCount": 2, "decayFactor": 0.70 }
+  ]
+}

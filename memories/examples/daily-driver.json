@@ -1,0 +1,12 @@
+{
+  "id": "daily_driver_example",
+  "type": "fact",
+  "key": "primary_editor",
+  "value": "VS Code with Vim extension, dark theme, font size 14",
+  "createdAt": 1748000000000,
+  "accessCount": 45,
+  "decayFactor": 0.92,
+  "embedding": null,
+  "tags": ["tools", "editor", "workflow"],
+  "sessionIds": ["session_001", "session_002", "session_003"]
+}

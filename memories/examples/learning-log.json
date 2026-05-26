@@ -1,0 +1,12 @@
+{
+  "id": "learning_log_example",
+  "type": "summary",
+  "key": "rust_ownership_notes",
+  "value": "Studied Rust ownership model: borrowing, lifetimes, and the borrow checker. Key insight: ownership prevents data races at compile time.",
+  "createdAt": 1747900000000,
+  "accessCount": 12,
+  "decayFactor": 0.85,
+  "embedding": null,
+  "tags": ["learning", "rust", "programming"],
+  "sessionIds": ["session_010", "session_011"]
+}

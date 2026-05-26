@@ -1,0 +1,25 @@
+{
+  "weights": {
+    "recallAccuracy": 0.30,
+    "memoryQuality": 0.25,
+    "compressionEfficiency": 0.20,
+    "latency": 0.15,
+    "tokenEfficiency": 0.10
+  },
+  "thresholds": {
+    "excellent": 0.90,
+    "good": 0.75,
+    "acceptable": 0.60,
+    "poor": 0.40
+  },
+  "penalties": {
+    "highLatency": -0.05,
+    "lowRecall": -0.10,
+    "excessiveTokens": -0.08
+  },
+  "bonuses": {
+    "highCompression": 0.05,
+    "fastResponse": 0.03,
+    "zeroDrift": 0.04
+  }
+}

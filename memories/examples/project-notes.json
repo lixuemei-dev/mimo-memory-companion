@@ -1,0 +1,12 @@
+{
+  "id": "project_notes_example",
+  "type": "fact",
+  "key": "deployment_config",
+  "value": "Production deploys on AWS ECS, staging on DigitalOcean, CI via GitHub Actions",
+  "createdAt": 1747800000000,
+  "accessCount": 8,
+  "decayFactor": 0.78,
+  "embedding": null,
+  "tags": ["project", "deployment", "infrastructure"],
+  "sessionIds": ["session_020"]
+}

@@ -1,0 +1,28 @@
+{
+  "name": "mimo-memory-companion",
+  "version": "1.0.0",
+  "description": "Persistent memory layer for Xiaomi MiMo",
+  "main": "src/index.js",
+  "bin": {
+    "mimo-memory": "./src/cli.js"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "cli": "node src/cli.js",
+    "test": "jest --coverage",
+    "lint": "eslint src/",
+    "build": "node scripts/run.js",
+    "validate": "node scripts/validate.js",
+    "compare": "node scripts/compare.js"
+  },
+  "keywords": ["mimo", "memory", "ai", "llm", "xiaomi", "context"],
+  "author": "lixuemei-dev",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "eslint": "^8.57.0"
+  }
+}

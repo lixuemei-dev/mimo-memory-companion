@@ -1,0 +1,20 @@
+{
+  "name": "rapid-recall-stress",
+  "description": "Test rapid sequential recall operations",
+  "config": {
+    "memoryCount": 5000,
+    "rapidQueries": 200,
+    "targetLatencyMs": 50
+  },
+  "operations": [
+    { "type": "bulk_insert", "count": 5000, "batchSize": 200 },
+    { "type": "rapid_recall", "queries": 200, "topK": 5 },
+    { "type": "recall_accuracy_check", "sampleSize": 50 }
+  ],
+  "expected": {
+    "avgLatencyMs": "< 50",
+    "p95LatencyMs": "< 100",
+    "p99LatencyMs": "< 200",
+    "accuracy": "> 0.8"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "concurrent-sessions-stress",
+  "description": "Test parallel session handling with shared memory store",
+  "config": {
+    "concurrentSessions": 20,
+    "messagesPerSession": 50,
+    "sharedMemory": true
+  },
+  "operations": [
+    { "type": "parallel_session_start", "count": 20 },
+    { "type": "parallel_store", "messagesPerSession": 50 },
+    { "type": "parallel_recall", "queriesPerSession": 10 },
+    { "type": "parallel_session_end", "count": 20 },
+    { "type": "consistency_check" }
+  ],
+  "expected": {
+    "noRaceConditions": true,
+    "noDataLoss": true,
+    "consistencyScore": 1.0,
+    "avgResponseMs": "< 200"
+  }
+}

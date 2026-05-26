@@ -1,0 +1,23 @@
+{
+  "name": "massive-memory-stress",
+  "description": "Stress test with 10K+ memory entries",
+  "config": {
+    "memoryCount": 10000,
+    "recallQueries": 100,
+    "concurrentReads": 50,
+    "targetLatencyMs": 100
+  },
+  "operations": [
+    { "type": "bulk_insert", "count": 10000, "batchSize": 100 },
+    { "type": "recall", "queries": 100, "topK": 10 },
+    { "type": "concurrent_recall", "parallel": 50, "queries": 200 },
+    { "type": "garbage_collect", "threshold": 0.05 },
+    { "type": "stats" }
+  ],
+  "expected": {
+    "insertTimeMs": "< 5000",
+    "avgRecallMs": "< 100",
+    "maxRecallMs": "< 500",
+    "gcCleaned": "> 500"
+  }
+}

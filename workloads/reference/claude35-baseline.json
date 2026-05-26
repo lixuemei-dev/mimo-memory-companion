@@ -1,0 +1,31 @@
+{
+  "name": "claude35-baseline",
+  "description": "Performance reference baseline using Claude 3.5",
+  "config": {
+    "model": "claude-3-5-sonnet",
+    "temperature": 0.7,
+    "maxTokens": 8192
+  },
+  "benchmarks": {
+    "memoryExtraction": {
+      "accuracy": 0.85,
+      "avgLatencyMs": 280,
+      "tokensPerExtract": 120
+    },
+    "contextInjection": {
+      "relevanceScore": 0.91,
+      "avgLatencyMs": 180,
+      "tokensPerInjection": 750
+    },
+    "compression": {
+      "ratio": 0.22,
+      "qualityScore": 0.83,
+      "avgLatencyMs": 350
+    }
+  },
+  "tokenCost": {
+    "inputPer1k": 0.003,
+    "outputPer1k": 0.015,
+    "monthlyEstimate": "$15.00"
+  }
+}

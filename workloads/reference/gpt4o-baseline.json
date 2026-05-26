@@ -1,0 +1,31 @@
+{
+  "name": "gpt4o-baseline",
+  "description": "Performance reference baseline using GPT-4o",
+  "config": {
+    "model": "gpt-4o",
+    "temperature": 0.7,
+    "maxTokens": 4096
+  },
+  "benchmarks": {
+    "memoryExtraction": {
+      "accuracy": 0.82,
+      "avgLatencyMs": 350,
+      "tokensPerExtract": 150
+    },
+    "contextInjection": {
+      "relevanceScore": 0.88,
+      "avgLatencyMs": 200,
+      "tokensPerInjection": 800
+    },
+    "compression": {
+      "ratio": 0.25,
+      "qualityScore": 0.79,
+      "avgLatencyMs": 400
+    }
+  },
+  "tokenCost": {
+    "inputPer1k": 0.0025,
+    "outputPer1k": 0.01,
+    "monthlyEstimate": "$12.50"
+  }
+}

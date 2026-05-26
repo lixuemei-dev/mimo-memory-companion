@@ -1,0 +1,25 @@
+{
+  "name": "long-conversation-session",
+  "description": "Realistic workload: extended multi-hour conversation",
+  "config": {
+    "duration": "5 hours",
+    "messages": 200,
+    "memoryOps": 80,
+    "contextSwitches": 15
+  },
+  "operations": [
+    { "type": "session_start", "context": "casual" },
+    { "type": "recall", "query": "user preferences from past sessions", "topK": 10 },
+    { "type": "store", "type": "emotional", "key": "mood", "value": "User excited about new project idea" },
+    { "type": "recall", "query": "related project discussions", "topK": 5 },
+    { "type": "store", "type": "fact", "key": "project_idea", "value": "AI-powered code review tool using MiMo" },
+    { "type": "recall", "query": "technical decisions made today", "topK": 5 },
+    { "type": "session_end" }
+  ],
+  "expected": {
+    "memoriesStored": 80,
+    "recallRelevance": "> 0.85",
+    "cohesionScore": "> 0.8",
+    "driftDetection": "accurate"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "research-reading-session",
+  "description": "Realistic workload: long-form research and reading comprehension",
+  "config": {
+    "duration": "3 hours",
+    "messages": 120,
+    "documents": 5,
+    "memoryOps": 50
+  },
+  "operations": [
+    { "type": "session_start", "context": "research" },
+    { "type": "recall", "query": "previous research on similar topic", "topK": 5 },
+    { "type": "store", "type": "summary", "key": "paper_1", "value": "Key findings from paper on transformer architectures" },
+    { "type": "store", "type": "fact", "key": "reference", "value": "Smith et al. 2024 - attention mechanisms survey" },
+    { "type": "recall", "query": "related research findings", "topK": 10 },
+    { "type": "store", "type": "preference", "key": "methodology", "value": "Prefer empirical results over theoretical analysis" },
+    { "type": "session_end" }
+  ],
+  "expected": {
+    "memoriesStored": 50,
+    "recallRelevance": "> 0.8",
+    "knowledgeGraph": "built"
+  }
+}
